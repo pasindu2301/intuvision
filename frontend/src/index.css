@@ -1,0 +1,32 @@
+:root {
+  --bg: #050c1c;
+  --surface: #0e1a33;
+  --surface-soft: #0a152b;
+  --border: #1b3058;
+  --border-strong: #355089;
+  --heading: #f5f9ff;
+  --muted: #b9c6dd;
+  --font: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+}
