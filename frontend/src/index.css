@@ -1,11 +1,11 @@
 :root {
-  --bg: #050c1c;
-  --surface: #0e1a33;
-  --surface-soft: #0a152b;
-  --border: #1b3058;
-  --border-strong: #355089;
-  --heading: #f5f9ff;
-  --muted: #b9c6dd;
+  --bg: #f6f9ff;
+  --surface: #ffffff;
+  --surface-soft: #eef4ff;
+  --border: #d8e4ff;
+  --border-strong: #9ab7ff;
+  --heading: #14213d;
+  --muted: #4e6286;
   --font: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
 }
 

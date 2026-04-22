@@ -1,21 +1,49 @@
+import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import './App.css'
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  function closeMenu() {
+    setMenuOpen(false)
+  }
+
   return (
     <div className="page">
       <header className="site-header">
         <div className="container nav-wrap">
-          <NavLink className="brand" to="/">
+          <NavLink className="brand" to="/" onClick={closeMenu}>
             IntuVision
           </NavLink>
-          <nav className="nav-links" aria-label="Main navigation">
-            <NavLink to="/services">Services</NavLink>
-            <NavLink to="/projects">Projects</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
+          <button
+            type="button"
+            className="menu-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="main-navigation"
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            Menu
+          </button>
+          <nav
+            id="main-navigation"
+            className={`nav-links ${menuOpen ? 'open' : ''}`}
+            aria-label="Main navigation"
+          >
+            <NavLink to="/services" onClick={closeMenu}>
+              Services
+            </NavLink>
+            <NavLink to="/projects" onClick={closeMenu}>
+              Projects
+            </NavLink>
+            <NavLink to="/about" onClick={closeMenu}>
+              About
+            </NavLink>
+            <NavLink to="/contact" onClick={closeMenu}>
+              Contact
+            </NavLink>
           </nav>
-          <NavLink className="btn btn-small" to="/contact">
+          <NavLink className="btn btn-small nav-cta" to="/contact" onClick={closeMenu}>
             Join Waitlist
           </NavLink>
         </div>
