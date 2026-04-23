@@ -50,21 +50,31 @@ function AdminPage() {
     }
   }
 
-  async function handleDelete(entryId) {
+  async function handleDelete(entryId, entryEmail) {
     const confirmed = window.confirm('Delete this waitlist entry? This cannot be undone.')
     if (!confirmed) return
 
     try {
       setDeletingId(entryId)
       setError('')
-      await apiRequest(`/api/admin/waitlist/${entryId}`, {
+      const deletePath = entryId
+        ? `/api/admin/waitlist/${entryId}`
+        : `/api/admin/waitlist/by-email/${encodeURIComponent(entryEmail || '')}`
+      await apiRequest(deletePath, {
         method: 'DELETE',
         headers: {
           'x-admin-password': password,
         },
       })
-      setRows((prev) => prev.filter((row) => row.id !== entryId))
-      setSelectedRow((prev) => (prev?.id === entryId ? null : prev))
+      setRows((prev) =>
+        prev.filter((row) => (entryId ? row.id !== entryId : row.email !== entryEmail)),
+      )
+      setSelectedRow((prev) => {
+        if (!prev) return null
+        if (entryId && prev.id === entryId) return null
+        if (!entryId && prev.email === entryEmail) return null
+        return prev
+      })
     } catch (err) {
       if (err.message === 'Unauthorized') {
         clearAdminSession()
@@ -163,7 +173,7 @@ function AdminPage() {
                       <button
                         className="btn btn-small btn-ghost"
                         type="button"
-                        onClick={() => handleDelete(entry.id)}
+                        onClick={() => handleDelete(entry.id, entry.email)}
                         disabled={deletingId === entry.id}
                       >
                         {deletingId === entry.id ? 'Deleting...' : 'Delete'}
