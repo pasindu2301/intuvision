@@ -26,10 +26,20 @@
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 800;
   letter-spacing: 0.04em;
   color: var(--heading);
   text-decoration: none;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 6px;
 }
 
 .nav-links {
@@ -465,6 +475,12 @@ h1 {
   font-size: 0.95rem;
 }
 
+.form-error {
+  margin: 12px 0 0;
+  color: #bf2e2e;
+  font-size: 0.95rem;
+}
+
 .form-note a {
   color: var(--heading);
   text-decoration: none;
@@ -545,6 +561,85 @@ h1 {
   padding: 18px 0 26px;
 }
 
+.admin-page {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-login-page {
+  display: grid;
+  gap: 16px;
+  max-width: 560px;
+}
+
+.admin-login-form {
+  display: grid;
+  gap: 12px;
+  max-width: 380px;
+}
+
+.admin-controls {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: auto auto auto;
+  align-items: end;
+}
+
+.admin-table-wrap {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 780px;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.admin-table th {
+  color: var(--heading);
+  background: var(--surface-soft);
+}
+
+.admin-row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-detail-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 16px;
+}
+
+.admin-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-detail-header h2 {
+  margin: 0;
+  color: var(--heading);
+}
+
+.admin-detail-card p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
 .footer-wrap {
   display: flex;
   align-items: center;
@@ -560,6 +655,12 @@ h1 {
 .footer-wrap a {
   color: var(--heading);
   text-decoration: none;
+}
+
+.footer-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .reveal {
@@ -630,7 +731,8 @@ h1 {
   .about-grid,
   .insights-grid,
   .home-contact,
-  .contact-grid {
+  .contact-grid,
+  .admin-controls {
     grid-template-columns: 1fr;
   }
 
@@ -663,6 +765,16 @@ h1 {
 }
 
 @media (max-width: 640px) {
+  .brand {
+    gap: 8px;
+    font-size: 0.95rem;
+  }
+
+  .brand-logo {
+    width: 28px;
+    height: 28px;
+  }
+
   .container {
     width: min(1120px, 94%);
   }
@@ -711,5 +823,9 @@ h1 {
   .footer-wrap {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .footer-links {
+    gap: 10px;
   }
 }

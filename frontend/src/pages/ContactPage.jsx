@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'
+import { apiRequest } from '../lib/api'
 
 function ContactPage() {
-  const [status, setStatus] = useState('idle') // idle | submitting | success
+  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [submitError, setSubmitError] = useState('')
   const [values, setValues] = useState({
     name: '',
     email: '',
@@ -32,23 +34,19 @@ function ContactPage() {
     e.preventDefault()
     if (!canSubmit) return
     setStatus('submitting')
+    setSubmitError('')
 
-    const subject = encodeURIComponent('IntuVision enquiry')
-    const body = encodeURIComponent(
-      [
-        `Name: ${values.name}`,
-        `Email: ${values.email}`,
-        values.company ? `Company: ${values.company}` : null,
-        values.phone ? `Phone: ${values.phone}` : null,
-        '',
-        values.message,
-      ]
-        .filter(Boolean)
-        .join('\n'),
-    )
-
-    window.location.href = `mailto:info@intuvision.pro?subject=${subject}&body=${body}`
-    setStatus('success')
+    apiRequest('/api/waitlist', {
+      method: 'POST',
+      body: JSON.stringify(values),
+    })
+      .then(() => {
+        setStatus('success')
+      })
+      .catch((err) => {
+        setStatus('error')
+        setSubmitError(err.message || 'Something went wrong. Please try again.')
+      })
   }
 
   return (
@@ -81,15 +79,23 @@ function ContactPage() {
         <div className="form-card" aria-label="Contact form">
           {status === 'success' ? (
             <div className="form-success">
-              <h2>Thanks — we’ve got your message.</h2>
+              <h2>Thanks - your waitlist entry is saved.</h2>
               <p>
-                If your email client didn’t open, you can send us an email at{' '}
-                <a href="mailto:info@intuvision.pro">info@intuvision.pro</a>.
+                We will contact you soon about next steps and onboarding.
               </p>
               <button
                 className="btn btn-small"
                 type="button"
-                onClick={() => setStatus('idle')}
+                onClick={() => {
+                  setStatus('idle')
+                  setValues({
+                    name: '',
+                    email: '',
+                    company: '',
+                    phone: '',
+                    message: '',
+                  })
+                }}
               >
                 Send another message
               </button>
@@ -171,10 +177,10 @@ function ContactPage() {
                   {status === 'submitting' ? 'Sending…' : 'Send Message'}
                 </button>
                 <p className="form-note">
-                  This will open your email app to send the message to{' '}
-                  <a href="mailto:info@intuvision.pro">info@intuvision.pro</a>.
+                  This form securely stores your waitlist details for our team.
                 </p>
               </div>
+              {status === 'error' ? <p className="form-error">{submitError}</p> : null}
             </form>
           )}
         </div>

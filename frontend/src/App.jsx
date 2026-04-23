@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
+import logo from './assets/intu_logo.png'
 import './App.css'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <header className="site-header">
         <div className="container nav-wrap">
           <NavLink className="brand" to="/" onClick={closeMenu}>
+            <img className="brand-logo" src={logo} alt="IntuVision logo" />
             IntuVision
           </NavLink>
           <button
@@ -56,7 +58,9 @@ function App() {
       <footer className="site-footer">
         <div className="container footer-wrap">
           <p>© {new Date().getFullYear()} IntuVision. All rights reserved.</p>
-          <NavLink to="/">Back to home</NavLink>
+          <div className="footer-links">
+            <NavLink to="/">Back to home</NavLink>
+          </div>
         </div>
       </footer>
     </div>
