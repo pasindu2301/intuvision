@@ -9,6 +9,11 @@ const app = express()
 const port = Number(process.env.PORT || 4000)
 const host = process.env.HOST || '127.0.0.1'
 const frontendOrigin = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'
+const allowedOrigins = [
+  frontendOrigin,
+  'https://intuvision.pro',
+  'https://www.intuvision.pro',
+]
 const adminPassword = process.env.ADMIN_PASSWORD || ''
 
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -32,7 +37,12 @@ function normalizeText(value) {
 
 app.use(
   cors({
-    origin: frontendOrigin,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true)
+      }
+      return callback(new Error('CORS origin not allowed'))
+    },
   }),
 )
 app.use(express.json())
@@ -45,12 +55,11 @@ app.get('/api/health', (_, res) => {
 // ── Public: join waitlist ─────────────────────────────────────────────────────
 app.post('/api/waitlist', async (req, res) => {
   try {
-    const { name = '', email = '', company = '', phone = '', message = '' } = req.body || {}
+    const { name = '', email = '', company = '', message = '' } = req.body || {}
 
     const safeName    = normalizeText(name)
     const safeEmail   = normalizeText(email).toLowerCase()
     const safeCompany = normalizeText(company)
-    const safePhone   = normalizeText(phone)
     const safeMessage = normalizeText(message)
 
     // ── Validation ────────────────────────────────────────────────────────────
@@ -66,7 +75,6 @@ app.post('/api/waitlist', async (req, res) => {
       name:    safeName,
       email:   safeEmail,
       company: safeCompany || null,
-      phone:   safePhone   || null,
       message: safeMessage,
       source:  'intuvision',
     }
@@ -125,7 +133,7 @@ app.get('/api/admin/waitlist', requireAdmin, async (req, res) => {
 
     const { data, error } = await adminSupabase
       .from('waitlist_customers')
-      .select('id, name, email, company, phone, message, source, created_at')
+      .select('id, name, email, company, message, source, created_at')
       .order('created_at', { ascending: false })
 
     if (error) {

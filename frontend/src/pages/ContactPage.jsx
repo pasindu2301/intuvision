@@ -8,7 +8,6 @@ function ContactPage() {
     name: '',
     email: '',
     company: '',
-    phone: '',
     message: '',
   })
 
@@ -66,10 +65,6 @@ function ContactPage() {
               <a href="mailto:info@intuvision.pro">info@intuvision.pro</a>
             </div>
             <div className="contact-row">
-              <span> Phone</span>
-              <a href="tel:+61430050480">+61 430 050 480</a>
-            </div>
-            <div className="contact-row">
               <span> Address</span>
               <p>Technology Park, Mawson Lakes SA 5095</p>
             </div>
@@ -92,7 +87,6 @@ function ContactPage() {
                     name: '',
                     email: '',
                     company: '',
-                    phone: '',
                     message: '',
                   })
                 }}
@@ -138,18 +132,6 @@ function ContactPage() {
                     onChange={onChange}
                     placeholder="Company name"
                     autoComplete="organization"
-                  />
-                </label>
-
-                <label className="field">
-                  <span>Phone</span>
-                  <input
-                    name="phone"
-                    value={values.phone}
-                    onChange={onChange}
-                    placeholder="+61 ..."
-                    autoComplete="tel"
-                    inputMode="tel"
                   />
                 </label>
 

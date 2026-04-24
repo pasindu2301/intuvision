@@ -4,7 +4,7 @@ import { apiRequest } from '../lib/api'
 import { clearAdminSession, getAdminPassword } from '../lib/adminAuth'
 
 function toCsv(rows) {
-  const header = ['created_at', 'name', 'email', 'company', 'phone', 'message', 'source']
+  const header = ['created_at', 'name', 'email', 'company', 'message', 'source']
   const escapeValue = (value) => `"${String(value ?? '').replaceAll('"', '""')}"`
   const lines = [
     header.join(','),
@@ -145,7 +145,6 @@ function AdminPage() {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Company</th>
-                <th>Phone</th>
                 <th>Source</th>
                 <th>Message</th>
                 <th>Actions</th>
@@ -158,7 +157,6 @@ function AdminPage() {
                   <td>{entry.name}</td>
                   <td>{entry.email}</td>
                   <td>{entry.company || '-'}</td>
-                  <td>{entry.phone || '-'}</td>
                   <td>{entry.source || '-'}</td>
                   <td>{entry.message}</td>
                   <td>
@@ -184,7 +182,7 @@ function AdminPage() {
               ))}
               {rows.length === 0 ? (
                 <tr>
-                  <td colSpan={8}>No waitlist records found.</td>
+                  <td colSpan={7}>No waitlist records found.</td>
                 </tr>
               ) : null}
             </tbody>
@@ -207,7 +205,6 @@ function AdminPage() {
             <p><strong>Name:</strong> {selectedRow.name}</p>
             <p><strong>Email:</strong> {selectedRow.email}</p>
             <p><strong>Company:</strong> {selectedRow.company || '-'}</p>
-            <p><strong>Phone:</strong> {selectedRow.phone || '-'}</p>
             <p><strong>Source:</strong> {selectedRow.source || '-'}</p>
             <p><strong>Message:</strong> {selectedRow.message}</p>
           </div>

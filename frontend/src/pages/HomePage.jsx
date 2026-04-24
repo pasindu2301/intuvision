@@ -119,10 +119,6 @@ function HomePage() {
                 <a href="mailto:info@intuvision.pro">info@intuvision.pro</a>
               </div>
               <div className="contact-row">
-                <span> Phone</span>
-                <a href="tel:+61430050480">+61 430 050 480</a>
-              </div>
-              <div className="contact-row">
                 <span> Address</span>
                 <p>Technology Park, Mawson Lakes SA 5095</p>
               </div>
